@@ -1,0 +1,128 @@
+#Build
+cd ~/ros2_ws
+colcon build --packages-select vision_input #(To build everything: colcon build)
+source install/setup.bash
+
+cd ~/ros2_ws && colcon build --packages-select vision_input && source install/setup.bash #(shortcut)
+
+#for Sim
+ros2 launch vision_input complete_system.launch.py
+
+#for real-robot
+ros2 launch vision_input complete_system.launch.py use_ur_driver:=true
+
+
+UR3 GESTURE CONTROL — QUICK COMMAND REFERENCE
+All commands needed from network setup to running the full system.
+
+
+# NETWORK SETUP
+
+Robot IP:  192.168.1.10
+Laptop IP: 192.168.1.100
+Interface: eno1
+
+Set laptop IP:
+  sudo ip addr add 192.168.1.100/24 dev eno1
+  sudo ip link set eno1 up
+
+Test connection:
+  ping 192.168.1.10
+
+
+# BUILD 
+
+Navigate to workspace:
+  cd ~/ros2_ws
+
+Build everything:
+  colcon build
+
+Build only your package:
+  colcon build --packages-select vision_input
+
+Source after building:
+  source install/setup.bash
+
+
+# LAUNCH: STANDALONE (Home / RViz only)
+Terminal 1:
+  cd ~/ros2_ws && source install/setup.bash
+  ros2 launch vision_input complete_system.launch.py
+
+
+# LAUNCH: REAL ROBOT (Lab)
+Terminal 1 — UR Driver:
+  cd ~/ros2_ws && source install/setup.bash
+  ros2 launch ur_robot_driver ur_control.launch.py ur_type:=ur3 robot_ip:=192.168.1.10 launch_rviz:=true use_fake_hardware:=false
+
+Terminal 2 — Your System:
+  cd ~/ros2_ws && source install/setup.bash
+  ros2 launch vision_input complete_system.launch.py use_ur_driver:=true
+
+Terminal 3 (Teach Pendant):
+  Load program "intention_pred_model" → Press Play
+
+
+# USEFUL DEBUG COMMANDS
+See all active topics:
+  ros2 topic list
+
+Watch gesture output:
+  ros2 topic echo /vision_input/gesture_text
+
+Watch joint states from robot:
+  ros2 topic echo /joint_states
+
+Watch what commands you're sending:
+  ros2 topic echo /scaled_joint_trajectory_controller/joint_trajectory
+
+Check if robot is publishing:
+  ros2 topic hz /joint_states
+
+Live tune mapping parameters:
+  ros2 param set /robot_controller map_scale_y 0.8
+  ros2 param set /robot_controller map_scale_z 0.8
+  ros2 param set /robot_controller map_offset_z 0.25
+  ros2 param set /robot_controller map_offset_x 0.30
+
+List all parameters:
+  ros2 param list /robot_controller
+
+
+# MANUAL JOINT COMMAND (Testing without gestures)
+Send robot to a position manually:
+  ros2 topic pub --once /scaled_joint_trajectory_controller/joint_trajectory trajectory_msgs/msg/JointTrajectory "{
+    header: {stamp: {sec: 0, nanosec: 0}},
+    joint_names: [shoulder_pan_joint, shoulder_lift_joint, elbow_joint, wrist_1_joint, wrist_2_joint, wrist_3_joint],
+    points: [{positions: [0.0, -1.57, 1.57, -1.57, -1.57, 0.0], velocities: [0,0,0,0,0,0], time_from_start: {sec: 4, nanosec: 0}}]
+  }"
+
+
+# RECORD JOINT ANGLES (For fetch pickup poses)
+Jog robot to position using teach pendant, then:
+  ros2 topic echo /joint_states --once
+
+Copy the positions array — those are your pickup joints.
+
+# SAFETY CHECKLIST (Before every session)
+1. E-stop within reach
+2. Speed slider at 10%
+3. Launch system
+4. Test STOP gesture first — verify freeze
+5. Test OKAY gesture — verify unfreeze
+6. Then test POINT
+7. Increase speed gradually (25%, 50%)
+
+
+# KILL EVERYTHING
+Ctrl+C in each terminal
+
+If something hangs:
+  pkill -f ros2
+  pkill -f robot_controller
+  pkill -f camera_node
+
+
+
+# END

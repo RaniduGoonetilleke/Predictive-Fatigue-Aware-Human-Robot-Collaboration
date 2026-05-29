@@ -1,0 +1,18 @@
+# Python dependencies for the perception, training, and evaluation pipelines.
+# Versions are pinned to the ones used to produce the results in the paper, so
+# that anyone re-running train_model.py and compare_classifiers.py gets the
+# same accuracy figures and confusion matrices.
+#
+# Install with:
+#   pip3 install -r requirements.txt
+#
+# ROS 2 itself is not listed here. Install it separately following the official
+# ROS 2 Humble instructions for Ubuntu 22.04.
+
+scikit-learn==1.7.2
+numpy==1.26.4
+pandas==2.3.3
+joblib==1.5.3
+mediapipe==0.10.9
+opencv-python==4.8.0
+scipy==1.8.0
