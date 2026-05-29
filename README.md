@@ -129,26 +129,43 @@ ros2_ws/
 
 ## Reproducing the paper results
 
-1. **Retrain the gesture classifier** on the bundled CSVs (`data/grasp.csv`, `point.csv`, `stop.csv`, `okay.csv`, `neutral.csv`):
+The figures in `src/report/plots/` are the canonical figures used in the paper. The scripts that generated them are committed in the same folder, so reviewers can verify the figures from the bundled training data. Re-running them should match the committed PNGs exactly.
+
+1. **Retrain the gesture classifier** from the bundled CSVs (`data/grasp.csv`, `point.csv`, `stop.csv`, `okay.csv`, `neutral.csv`):
 
    ```bash
    cd ~/ros2_ws/src/vision_input/vision_input
    python3 train_model.py
    ```
 
-   Expected output: dataset of 2,600 raw samples (520 per class), 4,160 training samples after mirror augmentation, 520 raw test samples, Random Forest accuracy 99.62%, two errors both Okay/Neutral. The model is saved to `data/gesture_brain.joblib`.
+   Expected output: 2,600 raw samples (520 per class), 4,160 training samples after mirror augmentation on the training fold only, 520 raw test samples, Random Forest accuracy 99.62%, with two errors both in the Okay/Neutral confusion region. The trained model is saved to `data/gesture_brain.joblib` and matches the bundled `gesture_brain.joblib`.
 
-2. **Regenerate the comparison table** (RF vs MLP vs KNN, the contents of Table X in the paper):
+2. **Verify the classifier comparison** (Random Forest vs MLP vs KNN, the contents of Table 4 in the paper):
 
    ```bash
+   cd ~/ros2_ws/src/vision_input/vision_input
    python3 compare_classifiers.py
    ```
 
-   Expected output: 99.62% / 100.00% / 100.00% accuracy on the same leak-free split, with inference latencies (microseconds per sample) printed in a markdown-formatted table at the bottom of stdout.
+   Expected output: 99.62% / 100.00% / 100.00% accuracy on the same leak-free split, with inference latencies in microseconds per sample.
 
-3. **Regenerate the confusion matrix figure** (used in `src/report/plots/confusion_matrix.png`): `[TBD: confirm command]`. The values used in the published figure are emitted directly by `train_model.py` as the `CONFUSION MATRIX` block in stdout.
+3. **Verify the confusion-matrix figure**:
 
-4. **Regenerate the gesture-latency figure** (Figure 11): `[TBD: confirm command]`. The underlying timing data is recorded by `camera_node.py` to `data/latency_log.csv` during live runs.
+   ```bash
+   cd ~/ros2_ws/src/report/plots
+   python3 confusion_matrix.py
+   ```
+
+   This regenerates `confusion_matrix.png` in the same folder and should reproduce the bundled figure exactly (99.62% accuracy, two off-diagonal cells in the Okay/Neutral region).
+
+4. **Verify the gesture-latency figure (Figure 11)**:
+
+   The committed figure was generated from `data/latency_log.csv`, a log captured during live runs of `camera_node.py`. Because the log file is large and run-specific, it is not bundled in this repo; to reproduce the figure you must first capture your own latency log by running the system, then run:
+
+   ```bash
+   cd ~/ros2_ws/src/report/plots
+   python3 gesture_latency_histogram.py
+   ```
 
 ## Citing this work
 
