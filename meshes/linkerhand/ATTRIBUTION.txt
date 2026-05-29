@@ -1,0 +1,6 @@
+LinkerHand URDF mesh files
+Copyright 2025 LinkerHand, Ltd.
+Licensed under the Apache License, Version 2.0
+Source: https://github.com/linker-bot/linkerhand-urdf
+
+Used with modification in this project under the terms of the Apache 2.0 License.

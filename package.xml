@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>intention_gazebo</name>
+  <version>1.0.0</version>
+  <description>Gazebo simulation for Human Intention Prediction System</description>
+  <maintainer email="ranidugoonetilleke@gmail.com">Ranidu P. Goonetilleke</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>gazebo</depend>
+  <depend>gazebo_dev</depend>
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>gazebo_ros</depend>
+  <depend>gazebo_ros2_control</depend>
+  <depend>ur_description</depend>
+  <depend>robotiq_description</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>joint_state_broadcaster</depend>
+  <depend>joint_trajectory_controller</depend>
+  <depend>position_controllers</depend>
+  <depend>controller_manager</depend>
+  <depend>xacro</depend>
+  <depend>rviz2</depend>
+
+  <exec_depend>vision_input</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

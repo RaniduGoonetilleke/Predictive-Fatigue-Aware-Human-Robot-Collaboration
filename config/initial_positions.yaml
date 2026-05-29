@@ -1,0 +1,8 @@
+# Home position from lab session March 19th
+initial_positions:
+  shoulder_pan_joint: 0.324
+  shoulder_lift_joint: -1.240
+  elbow_joint: 0.793
+  wrist_1_joint: -1.135
+  wrist_2_joint: -1.595
+  wrist_3_joint: 0.217

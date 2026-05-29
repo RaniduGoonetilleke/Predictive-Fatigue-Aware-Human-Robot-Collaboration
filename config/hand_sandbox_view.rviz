@@ -1,0 +1,599 @@
+Panels:
+  - Class: rviz_common/Displays
+    Help Height: 158
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /TF1
+      Splitter Ratio: 0.5
+    Tree Height: 734
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 1
+      Class: rviz_default_plugins/RobotModel
+      Collision Enabled: false
+      Description File: ""
+      Description Source: Topic
+      Description Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot_description
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_link_inertia:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        flange:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        forearm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ft_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        robotiq_85_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robotiq_85_left_finger_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robotiq_85_left_finger_tip_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robotiq_85_left_inner_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robotiq_85_left_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robotiq_85_right_finger_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robotiq_85_right_finger_tip_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robotiq_85_right_inner_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robotiq_85_right_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        shoulder_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        tool0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        upper_arm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        world:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wrist_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wrist_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wrist_3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Mass Properties:
+        Inertia: false
+        Mass: false
+      Name: UR3 Robot
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Alpha: 1
+      Class: rviz_default_plugins/RobotModel
+      Collision Enabled: false
+      Description File: ""
+      Description Source: Topic
+      Description Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /virtual_hand/robot_description
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+        hand_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        index_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        index_metacarpals:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        index_middle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        index_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        middle_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        middle_metacarpals:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        middle_middle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        middle_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pinky_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pinky_metacarpals:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pinky_middle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pinky_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ring_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ring_metacarpals:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ring_middle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ring_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        thumb_distal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        thumb_metacarpals:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        thumb_metacarpals_base1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        thumb_metacarpals_base2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        thumb_proximal:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        virtual_hand_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+      Mass Properties:
+        Inertia: false
+        Mass: false
+      Name: Virtual Hand
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Mode Label
+      Namespaces:
+        gamepad_mode: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /vision_input/mode_label
+      Value: true
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: ReachLimit
+      Namespaces:
+        workspace: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /vision_input/reach_limit
+      Value: true
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Target
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /vision_input/clamped_target
+      Value: true
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Ghost
+      Namespaces:
+        ghost: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /vision_input/ghost_target
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: FetchMarkers
+      Namespaces:
+        fetch_objects: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /vision_input/fetch_markers
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: HazardMarkers
+      Namespaces:
+        hazard_zones: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /vision_input/hazard_markers
+      Value: true
+    - Align Bottom: false
+      Background Alpha: 0.800000011920929
+      Background Color: 0; 0; 0
+      Class: rviz_2d_overlay_plugins/TextOverlay
+      Enabled: true
+      Foreground Alpha: 0.800000011920929
+      Foreground Color: 25; 255; 240
+      Invert Shadow: false
+      Name: TextOverlay
+      Overtake BG Color Properties: false
+      Overtake FG Color Properties: false
+      Overtake Position Properties: false
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /vision_input/hud
+      Value: true
+      font: DejaVu Sans Mono
+      height: 128
+      hor_alignment: left
+      hor_dist: 0
+      line width: 2
+      text size: 12
+      ver_alignment: top
+      ver_dist: 0
+      width: 128
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: false
+        base:
+          Value: false
+        base_link:
+          Value: true
+        base_link_inertia:
+          Value: false
+        camera_link:
+          Value: false
+        flange:
+          Value: false
+        forearm_link:
+          Value: false
+        ft_frame:
+          Value: false
+        hand_base_link:
+          Value: false
+        index_distal:
+          Value: false
+        index_metacarpals:
+          Value: false
+        index_middle:
+          Value: false
+        index_proximal:
+          Value: false
+        middle_distal:
+          Value: false
+        middle_metacarpals:
+          Value: false
+        middle_middle:
+          Value: false
+        middle_proximal:
+          Value: false
+        pinky_distal:
+          Value: false
+        pinky_metacarpals:
+          Value: false
+        pinky_middle:
+          Value: false
+        pinky_proximal:
+          Value: false
+        ring_distal:
+          Value: false
+        ring_metacarpals:
+          Value: false
+        ring_middle:
+          Value: false
+        ring_proximal:
+          Value: false
+        robotiq_85_base_link:
+          Value: false
+        robotiq_85_left_finger_link:
+          Value: false
+        robotiq_85_left_finger_tip_link:
+          Value: false
+        robotiq_85_left_inner_knuckle_link:
+          Value: false
+        robotiq_85_left_knuckle_link:
+          Value: false
+        robotiq_85_right_finger_link:
+          Value: false
+        robotiq_85_right_finger_tip_link:
+          Value: false
+        robotiq_85_right_inner_knuckle_link:
+          Value: false
+        robotiq_85_right_knuckle_link:
+          Value: false
+        shoulder_link:
+          Value: false
+        thumb_distal:
+          Value: false
+        thumb_metacarpals:
+          Value: false
+        thumb_metacarpals_base1:
+          Value: false
+        thumb_metacarpals_base2:
+          Value: false
+        thumb_proximal:
+          Value: false
+        tool0:
+          Value: false
+        upper_arm_link:
+          Value: false
+        virtual_hand_base_link:
+          Value: false
+        world:
+          Value: false
+        wrist_1_link:
+          Value: false
+        wrist_2_link:
+          Value: false
+        wrist_3_link:
+          Value: false
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: false
+      Tree:
+        world:
+          base_link:
+            base:
+              {}
+            base_link_inertia:
+              shoulder_link:
+                upper_arm_link:
+                  forearm_link:
+                    wrist_1_link:
+                      wrist_2_link:
+                        wrist_3_link:
+                          flange:
+                            tool0:
+                              robotiq_85_base_link:
+                                robotiq_85_left_inner_knuckle_link:
+                                  {}
+                                robotiq_85_left_knuckle_link:
+                                  robotiq_85_left_finger_link:
+                                    robotiq_85_left_finger_tip_link:
+                                      {}
+                                robotiq_85_right_inner_knuckle_link:
+                                  {}
+                                robotiq_85_right_knuckle_link:
+                                  robotiq_85_right_finger_link:
+                                    robotiq_85_right_finger_tip_link:
+                                      {}
+                          ft_frame:
+                            {}
+            camera_link:
+              {}
+          virtual_hand_base_link:
+            hand_base_link:
+              index_metacarpals:
+                index_proximal:
+                  index_middle:
+                    index_distal:
+                      {}
+              middle_metacarpals:
+                middle_proximal:
+                  middle_middle:
+                    middle_distal:
+                      {}
+              pinky_metacarpals:
+                pinky_proximal:
+                  pinky_middle:
+                    pinky_distal:
+                      {}
+              ring_metacarpals:
+                ring_proximal:
+                  ring_middle:
+                    ring_distal:
+                      {}
+              thumb_metacarpals_base1:
+                thumb_metacarpals_base2:
+                  thumb_metacarpals:
+                    thumb_proximal:
+                      thumb_distal:
+                        {}
+      Update Interval: 0
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 119; 118; 123
+    Fixed Frame: base_link
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+      Hide Inactive Objects: true
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+  Transformation:
+    Current:
+      Class: rviz_default_plugins/TF
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 1.3639774322509766
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.05999999865889549
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: 0.33971625566482544
+        Y: 0.21874627470970154
+        Z: 0.2829281985759735
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.009999999776482582
+      Pitch: 0.45499980449676514
+      Target Frame: <Fixed Frame>
+      Value: Orbit (rviz)
+      Yaw: 1.1215882301330566
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 1043
+  Hide Left Dock: false
+  Hide Right Dock: false
+  QMainWindow State: 000000ff00000000fd0000000100000000000001d7000003b9fc0200000001fb000000100044006900730070006c006100790073010000003d000003b9000000c900ffffff000005a3000003b900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Width: 1920
+  X: 0
+  Y: 0
