@@ -14,7 +14,7 @@ What this repo delivers is a working end-to-end pipeline (perception, reasoning,
 
 - Universal Robots UR3 (Polyscope 5.x)
 - Robotiq 2F-85 adaptive gripper
-- RGB webcam (any 720p+ USB camera; tested on a Logitech C920)
+- RGB webcam (any 1080p+ USB camera supporting MJPEG; tested on a Logitubo 920, T/N 920H4, P/N USBL-232H4)
 - Tobii Pro Glasses 3 (for live pupillometry; optional, see below)
 - Linux laptop with Ubuntu 22.04 and at least 8 GB RAM
 
@@ -24,13 +24,13 @@ The simulation path (`complete_system.launch.py` without `use_ur_driver:=true`) 
 
 ## How it works
 
-**Perception.** A single MediaPipe Hands inference loop runs at 20 Hz, producing 21 normalised landmarks per detected hand. The landmarks are flattened, wrist-centred, and passed to a Random Forest classifier that emits one of five gestures: POINT, STOP, OKAY, GRASP, NEUTRAL. A five-layer noise-suppression chain sits between the classifier and the command publisher: MediaPipe confidence floor, visibility quality gate, velocity gate (freezes landmarks during fast transitions), classifier confidence threshold, and a 10-frame consecutive-frame debounce. STOP is treated as safety-critical and uses a faster 2-frame debounce so the operator can halt the robot within roughly 100 ms of raising their hand.
+**Perception.** A single MediaPipe Hands inference loop runs on a 30 Hz timer (approximately 15 Hz effective at 1080p), producing 21 normalised landmarks per detected hand. The landmarks are flattened, wrist-centred, and passed to a Random Forest classifier that emits one of five gestures: POINT, STOP, OKAY, GRASP, NEUTRAL. A five-layer noise-suppression chain sits between the classifier and the command publisher: MediaPipe confidence floor, visibility quality gate, velocity gate (freezes landmarks during fast transitions), classifier confidence threshold, and a 10-frame consecutive-frame debounce. STOP is treated as safety-critical and uses a faster 2-frame debounce (roughly 130 ms at the measured ~15 Hz inference rate), a fraction of the full-gesture path.
 
 ![STOP gesture, safety-critical fast-debounce path](src/report/plots/poster_imgs/estop_gesture.png)
 
 In parallel, the Tobii Pro Glasses 3 node streams pupil diameter, blink rate, blink duration, and PERCLOS at 10 Hz.
 
-**Reasoning.** A composite fatigue score F fuses four normalised signals with weights 0.30 (blink rate), 0.25 (blink duration), 0.30 (PERCLOS), and 0.15 (hand jerk). The smoothed score is banded into FRESH (less than 0.30), MILD (less than 0.60), MODERATE (less than 0.80), and SEVERE (above 0.80). The band gates the rest of the system: velocity scales 100% / 70% / 40% / 15% across the bands and falls to 0% at full lockout, and the MODERATE band requires an OKAY confirmation gesture before any new fetch is committed. A separate acute-stress pathway watches pupil diameter against a 3-second rolling baseline; a spike of 15% or more latches a soft emergency-stop within roughly 200 ms end-to-end. The fetch behaviour itself runs as a ten-state finite-state machine (idle, identified, homing, pre-approach, approach, waiting-grasp, grasping, returning, delivering, waiting-receive).
+**Reasoning.** A composite fatigue score F fuses four normalised signals with weights 0.30 (blink rate), 0.25 (blink duration), 0.30 (PERCLOS), and 0.15 (hand jerk). The smoothed score is banded into FRESH (less than 0.30), MILD (less than 0.60), MODERATE (less than 0.80), and SEVERE (above 0.80). The band gates the rest of the system: velocity scales 100% / 70% / 40% / 15% across the bands and falls to 0% at full lockout, and the MODERATE band requires an OKAY confirmation gesture before any new fetch is committed. A separate acute-stress pathway watches pupil diameter against a 3-second rolling baseline; a spike of 15% or more latches a soft emergency-stop whose velocity scaling takes effect on the next 50 ms control tick. The fetch behaviour itself runs as a ten-state finite-state machine (idle, identified, homing, pre-approach, approach, waiting-grasp, grasping, returning, delivering, waiting-receive).
 
 ![Fetch FSM](src/report/plots/state_machine.png)
 
@@ -40,7 +40,7 @@ In parallel, the Tobii Pro Glasses 3 node streams pupil diameter, blink rate, bl
 
 ![Gesture classifier confusion matrix](src/report/plots/confusion_matrix.png)
 
-The deployed Random Forest reaches **99.62% accuracy (518 of 520)** on a leak-free split-then-augment evaluation: the 2,600 raw samples are stratified-split 80/20 first, then mirror augmentation is applied only to the training fold (4,160 train / 520 raw test). Both errors fall in the Okay/Neutral confusion region, which the geometric override layer in `camera_node.py` catches before the gesture is committed, raising effective system-level accuracy to 100%. End-to-end gesture-to-motion latency is approximately 550 ms worst case, dominated by the 10-frame consecutive-frame debounce window. A three-classifier comparison (RF, MLP, KNN) on the same split is reproducible via `compare_classifiers.py`.
+The deployed Random Forest reaches **99.62% accuracy (518 of 520)** on a leak-free split-then-augment evaluation: the 2,600 raw samples are stratified-split 80/20 first, then mirror augmentation is applied only to the training fold (4,160 train / 520 raw test). Both errors fall in the Okay/Neutral confusion region, which the geometric override layer in `camera_node.py` catches at the system level via a scale-invariant thumb-extension check. End-to-end gesture-to-motion latency has a conservative worst-case ceiling of approximately 830 ms: up to ~130 ms of camera-driver capture buffering (default 4-frame V4L2 buffer at the nominal 30 Hz capture rate), ~650 ms for the 10-frame consecutive-frame debounce at the measured ~15 Hz effective inference rate, and one 50 ms control tick. The safety-relevant STOP gesture uses a 2-frame fast-debounce branch. A three-classifier comparison (RF, MLP, KNN) on the same split is reproducible via `compare_classifiers.py`.
 
 ## Quick start
 
@@ -97,12 +97,12 @@ ros2 launch vision_input complete_system.launch.py
 Real UR3 (two terminals):
 
 ```bash
-# Terminal 1 — UR driver
+# Terminal 1 - UR driver
 ros2 launch ur_robot_driver ur_control.launch.py \
   ur_type:=ur3 robot_ip:=192.168.1.10 \
   launch_rviz:=true use_fake_hardware:=false
 
-# Terminal 2 — application layer
+# Terminal 2 - application layer
 ros2 launch vision_input complete_system.launch.py use_ur_driver:=true
 ```
 
@@ -122,8 +122,10 @@ ros2_ws/
 │   │   ├── urdf/
 │   │   ├── worlds/
 │   │   └── meshes/
-│   └── report/plots/        Figures used in the paper (architecture, FSM, confusion matrix)
-├── data/                    Training CSVs, deployed model, calibration config
+│   └── report/
+│       ├── plots/           Figures used in the paper + generating scripts, sensitivity_results.csv
+│       └── data/            Trial logs analysed in the paper (gaze_log, slew_log, tepr_log)
+├── data/                    Training CSVs, deployed model, latency_log.csv, calibration config
 └── commands.txt             Quick command reference
 ```
 
@@ -158,14 +160,18 @@ The figures in `src/report/plots/` are the canonical figures used in the paper. 
 
    This regenerates `confusion_matrix.png` in the same folder and should reproduce the bundled figure exactly (99.62% accuracy, two off-diagonal cells in the Okay/Neutral region).
 
-4. **Verify the gesture-latency figure (Figure 11)**:
+4. **Verify the gesture-latency figure (Figure 12 in the paper)**:
 
-   The committed figure was generated from `data/latency_log.csv`, a log captured during live runs of `camera_node.py`. Because the log file is large and run-specific, it is not bundled in this repo; to reproduce the figure you must first capture your own latency log by running the system, then run:
+   The committed figure was generated from `data/latency_log.csv`, a log captured during live runs of `camera_node.py` and bundled in this repo:
 
    ```bash
    cd ~/ros2_ws/src/report/plots
    python3 gesture_latency_histogram.py
    ```
+
+5. **Audit the trial logs behind the paper's operational statistics**:
+
+   The logs analysed in the paper are bundled: `src/report/data/gaze_log.csv` (prediction-engagement statistics, Table 7), `src/report/data/slew_log.csv` (fatigue-band scaling, Figures 8 and 11), `src/report/data/tepr_log.csv` (pupil timeline; contains no trigger events, as stated in the Figure 10 caption), and `sensitivity_results.csv` (weight-sensitivity sweep, Figure 9). Sessions within each log are concatenated, so proportions and counts are meaningful but durations across session boundaries are not.
 
 ## Citing this work
 
