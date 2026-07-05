@@ -57,13 +57,14 @@ class FatigueMonitor(Node):
         self.declare_parameter('publish_rate', 5.0)
 
         # Normalisation thresholds (from fatigue literature)
-        # Blink rate: normal 15/min, fatigued 30+/min
+        # Blink rate: normalised between 12/min (rested) and 28/min (fatigued)
         self.declare_parameter('blink_rate_baseline', 12.0)
         self.declare_parameter('blink_rate_max', 28.0)
-        # Blink duration: normal 0.15s, fatigued 0.40+s
+        # Blink duration: normalised between 0.12s (rested) and 0.38s (fatigued)
         self.declare_parameter('blink_dur_baseline', 0.12)
         self.declare_parameter('blink_dur_max', 0.38)
-        # PERCLOS: already 0-1, threshold at 0.15 = drowsy (Dinges 1998)
+        # PERCLOS: already 0-1; deployed threshold 0.08 (more sensitive than
+        # the 0.15 drowsiness criterion of Dinges 1998)
         self.declare_parameter('perclos_threshold', 0.08)
         # Hand jerk: normalised from velocity data
         self.declare_parameter('jerk_baseline', 0.3)
