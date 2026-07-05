@@ -88,7 +88,7 @@ class CameraNode(Node):
         self._vg_release_threshold = 0.6  # must drop below this to unfreeze
         self._vg_frozen_landmarks = None  # last good landmark msg to re-publish while frozen
         self._vg_consecutive = 0         # consecutive stable-gesture frame count
-        self._vg_required_frames = 10    # ~333ms at 30fps before accepting new gesture
+        self._vg_required_frames = 10    # ~650ms at the measured ~15Hz effective rate before accepting new gesture
 
         _latency_path = os.path.join(os.path.expanduser('~'),
             'ros2_ws', 'data', 'latency_log.csv')
@@ -156,12 +156,14 @@ class CameraNode(Node):
         multiple frames in a row. Prevents flickering.
         Uses two layers:
           1. Velocity gate (blocks during transitions)
-          2. Consecutive-frame debounce (10 frames = ~333ms)
+          2. Consecutive-frame debounce (10 frames = ~650ms at the
+             measured ~15Hz effective rate)
         """
 
-        # STOP: 2-frame debounce (~66 ms at 30 fps), filters single-frame
-        # RF noise that was locking the E-Stop on startup. Still well within
-        # ISO 15066 response-time margins for collaborative robots.
+        # STOP: 2-frame debounce (~130 ms at the measured ~15 Hz effective
+        # rate), filters single-frame RF noise that was locking the E-Stop
+        # on startup. This is a research-layer mechanism, not a certified
+        # safety function.
         if raw_gesture == "STOP":
             self._stop_candidate_count = getattr(self, '_stop_candidate_count', 0) + 1
             if self._stop_candidate_count >= 2:
