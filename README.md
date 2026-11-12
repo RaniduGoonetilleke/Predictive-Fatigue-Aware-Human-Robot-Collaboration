@@ -181,7 +181,7 @@ The figures in `src/report/plots/` are the canonical figures used in the paper. 
   author  = {Goonetilleke, Ranidu P. and Khalid, Azfar},
   journal = {Frontiers in Robotics and AI},
   year    = {2026},
-  note    = {[TBD: confirm DOI on acceptance]}
+  doi    = {(https://doi.org/10.3389/frobt.2026.1897261)}
 }
 ```
 
